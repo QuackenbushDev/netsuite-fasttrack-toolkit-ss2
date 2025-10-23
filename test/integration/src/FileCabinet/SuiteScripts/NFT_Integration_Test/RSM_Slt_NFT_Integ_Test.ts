@@ -19,8 +19,9 @@ import * as search from 'N/search'
 import { Seq } from './NFT-SS2-8.0.1/immutable'
 import { VendorPayment } from './RecordTypes/VendorPayment'
 import * as _ from './NFT-SS2-8.0.1/lodash'
-import { InventoryItemBase } from './NFT-SS2-8.0.1/DataAccess/InventoryItemBase'
+import { ServiceItemBase } from './NFT-SS2-8.0.1/DataAccess/ServiceItemBase'
 import { getColumns } from './NFT-SS2-8.0.1/queryAutoMapper'
+import { BigNumber } from './NFT-SS2-8.0.1/bignumber'
 
 const log = LogManager.DefaultLogger
 
@@ -73,18 +74,18 @@ namespace X {
    * ensure we can load an assembly item  now that it uses the shared `Item` base class
    */
   export function loadAssemblyItem () {
-    return new InventoryItemBase(111)
+    return new ServiceItemBase(286)
   }
 
   /**
    * Tests that NFT can load a specific transaction
    */
   export function loadTransaction () {
-    return new ItemFulfillment(1739)
+    return new ItemFulfillment(34090)
   }
 
   export function loadEntity () {
-    return new Customer(283)
+    return new Customer(329)
   }
 
   export function doSearch () {
@@ -127,7 +128,7 @@ namespace X {
   }
 
   export function sublists () {
-    const v = new VendorPayment(26896)
+    const v = new VendorPayment(32017)
 
     v.apply.useDynamicModeAPI = false
     const applySublist = _.toPlainObject(v.apply)
@@ -136,7 +137,7 @@ namespace X {
     // should be the same because the record was in standard mode all along
     const applySublist2 = _.toPlainObject(v.apply)
 
-    const customerAddress = new Customer(283).addressbook
+    const customerAddress = new Customer(329).addressbook
 
     return { standardModeResult: applySublist, standardModeResult2: applySublist2, customerAddress }
 
@@ -165,6 +166,15 @@ namespace X {
 
   }
 
+   /**
+    * Just a compilation check to ensure BigNumber is usable
+    * and runs in netsuite
+    */
+   export function bignumberCheck () {
+      const b = new BigNumber(3.14159)
+      return b.multipliedBy(2).toFixed(4)
+   }
+
   export function foo (obj: { x: string }) {
     obj.x += 'world'
     return obj
@@ -173,19 +183,20 @@ namespace X {
   export function bar (i: number) { return i + 5 }
 
   export const testMap: { [label: string]: Function } = {
-    // 'NSDAL load Transaction': X.loadTransaction,
-    // 'NSDAL load Inventory Item': X.loadAssemblyItem,
-    // 'NSDAL load Customer': X.loadEntity,
-    // 'NSDAL sublists': X.sublists,
-    // 'LazySearch': X.doSearch,
-    // 'LazyQuery Basic': X.doQueryBasic,
-    // 'LazyQuery Param': X.doQueryParam,
-    // 'LazyQuery Paged': X.doQueryPageSize,
-    // 'LazyQuery No page, Params': X.doQueryPageSizeParam,
-    // 'AutoLogging': X.autoLogging,
-    // 'BasicLodash': X.basicLodash,
+     'NSDAL load Transaction': X.loadTransaction,
+     'NSDAL load Inventory Item': X.loadAssemblyItem,
+     'NSDAL load Customer': X.loadEntity,
+     'NSDAL sublists': X.sublists,
+     'LazySearch': X.doSearch,
+     'LazyQuery Basic': X.doQueryBasic,
+     'LazyQuery Param': X.doQueryParam,
+     'LazyQuery Paged': X.doQueryPageSize,
+     'LazyQuery No page, Params': X.doQueryPageSizeParam,
+     'AutoLogging': X.autoLogging,
+     'BasicLodash': X.basicLodash,
      'AutoMapping': X.autoMapping,
-     'AutoMappingAdvanced': X.autoMappingAvancedQuery
+     'AutoMappingAdvanced': X.autoMappingAvancedQuery,
+     'BigNumber Sanity': X.bignumberCheck,
   }
 }
 
