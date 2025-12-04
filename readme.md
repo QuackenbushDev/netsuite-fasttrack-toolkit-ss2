@@ -1,3 +1,6 @@
+On going development of this fork will continue in [NS-Tools/Framework](https://github.com/NS-Tools/Framework).
+
+This repository will act as a snapshot/archive of the original netsuite-fasttrack-toolkit-ss2.
 
 <img src="media/images/NFT_logo_without_text.svg" alt="NFT Logo" width="200" height="200" />
 
